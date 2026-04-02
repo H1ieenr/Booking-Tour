@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Tour.API/Tour.API.csproj" />
+  <Project Path="Tour.Application/Tour.Application.csproj" Id="4e73ca2f-9628-4c6e-8fd8-2b36fcabc8e2" />
+  <Project Path="Tour.Domain/Tour.Domain.csproj" Id="c52ce414-4697-4685-b185-c9055c2e3581" />
+  <Project Path="Tour.Infrastructure/Tour.Infrastructure.csproj" Id="78736726-9f7a-47fa-9ea4-bde97be84be2" />
+</Solution>
