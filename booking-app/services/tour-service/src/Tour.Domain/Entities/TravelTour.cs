@@ -1,7 +1,7 @@
 
 namespace Domain.Entities
 {
-    public class Tour
+    public class TravelTour
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;

@@ -16,8 +16,14 @@ namespace Domain.Entities
         public decimal ChildPrice { get; set; }     // Trẻ em (5 - 11 tuổi)
         public decimal InfantPrice { get; set; } 
 
+        public bool IsDeleted {get; set;}
+        public string CreatedDate {get; set;} = string.Empty;
+        public string CreatedBy {get; set;} = string.Empty;
+        public string? UpdatedBy {get; set;} = string.Empty;
+        public DateTime? UpdatedDate { get; set; } 
+
         public int TourId { get; set; }
-        public Tour? Tour { get; set; }
+        public TravelTour? Tour { get; set; }
         public ICollection<VehicleAssignment> VehicleAssignments { get; set; } = new List<VehicleAssignment>();
     }
 }

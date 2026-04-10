@@ -7,7 +7,7 @@ namespace Domain.Entities
         public string Url { get; set; } = string.Empty;
         public bool IsPrimary { get; set; }
         public int TourId { get; set; }
-        public Tour? Tour { get; set; }
+        public TravelTour? Tour { get; set; }
 
         public bool IsDeleted {get; set;}
         public string CreatedDate {get; set;} = string.Empty;

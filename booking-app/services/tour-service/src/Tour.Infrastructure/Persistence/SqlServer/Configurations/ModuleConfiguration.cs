@@ -5,15 +5,15 @@ using Domain.Entities;
 namespace Infrastructure.Persistence
 {
     public class ModuleConfiguration : 
-        IEntityTypeConfiguration<Domain.Entities.Tour>,
+        IEntityTypeConfiguration<TravelTour>,
         IEntityTypeConfiguration<Departure>,
         IEntityTypeConfiguration<Category>,
         IEntityTypeConfiguration<Image>,
         IEntityTypeConfiguration<Schedule>
     {
-        public void Configure(EntityTypeBuilder<Tour> builder)
+        public void Configure(EntityTypeBuilder<TravelTour> builder)
         {
-            builder.ToTable("Tours");
+            builder.ToTable("TravelTours");
             builder.HasKey(e => e.Id);
             builder.Property(e => e.BasePrice).HasPrecision(18, 2);
             builder.Property(e => e.VehicleDescription).HasMaxLength(200);

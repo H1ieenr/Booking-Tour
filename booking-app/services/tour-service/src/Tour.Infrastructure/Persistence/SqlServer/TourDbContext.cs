@@ -7,7 +7,7 @@ namespace Infrastructure.Persistence
     {
         public TourDbContext(DbContextOptions<TourDbContext> options) : base(options) { }
 
-        public DbSet<Domain.Entities.Tour> Tours { get; set; }
+        public DbSet<TravelTour> TravelTours { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Schedule> Schedules { get; set; }

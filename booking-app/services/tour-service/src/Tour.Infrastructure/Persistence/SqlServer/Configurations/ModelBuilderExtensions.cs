@@ -9,6 +9,11 @@ namespace Infrastructure.Persistence
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Tour Miền Trung"},
+                new Category { Id = 2, Name = "Tour Miền Bắc"}
+            );
+
             modelBuilder.Entity<Vehicle>().HasData(
                 new Vehicle { Id = 1, Name = "Ford Transit Luxury", LicensePlate = "29A-111.11", Capacity = 16, DriverName = "Nguyễn Văn A", DriverPhone = "0901234567", Status = VehicleStatus.Active, CurrentOdometer = 15000 },
                 new Vehicle { Id = 2, Name = "Hyundai Universe", LicensePlate = "29B-222.22", Capacity = 45, DriverName = "Trần Văn B", DriverPhone = "0907654321", Status = VehicleStatus.Active, CurrentOdometer = 50000 }
@@ -18,13 +23,13 @@ namespace Infrastructure.Persistence
                 new VehicleAssignment 
                 { 
                     Id = 1, DepartureId = 1, VehicleId = 1, 
-                    FromDate = new DateTime(2026, 4, 5), ToDate = new DateTime(2026, 4, 8), 
+                    FromDate = new DateTime(2026, 4, 5, 0, 0, 0, DateTimeKind.Unspecified), ToDate = new DateTime(2026, 7, 5, 0, 0, 0, DateTimeKind.Unspecified),
                     Note = "Đón tại KS Mường Thanh" 
                 }
             );
 
-            modelBuilder.Entity<Domain.Entities.Tour>().HasData(
-                new Domain.Entities.Tour 
+            modelBuilder.Entity<TravelTour>().HasData(
+                new TravelTour 
                 { 
                     Id = 1, 
                     Title = "Tour Đà Nẵng - Hội An", 
@@ -40,7 +45,7 @@ namespace Infrastructure.Persistence
                     TermsAndConditions = "Áp dụng cho đoàn từ 10 người",
                     CancelPolicy = "Hủy trước 7 ngày không mất phí"
                 },
-                new Domain.Entities.Tour 
+                new TravelTour
                 { 
                     Id = 2, 
                     Title = "Khám phá Fansipan Sapa", 
@@ -63,8 +68,8 @@ namespace Infrastructure.Persistence
                 { 
                     Id = 1, 
                     TourId = 1, 
-                    StartDate = new DateTime(2026, 4, 5), 
-                    EndDate = new DateTime(2026, 4, 8), 
+                    StartDate = new DateTime(2026, 4, 4, 0, 0, 0, DateTimeKind.Unspecified),
+                    EndDate = new DateTime(2026, 6, 5, 0, 0, 0, DateTimeKind.Unspecified),
                     MaxParticipants = 20, 
                     CurrentParticipants = 5, 
                     Status = DepartureStatus.Available,
@@ -76,8 +81,8 @@ namespace Infrastructure.Persistence
                 { 
                     Id = 2, 
                     TourId = 2, 
-                    StartDate = new DateTime(2026, 4, 10), 
-                    EndDate = new DateTime(2026, 4, 15), 
+                    StartDate = new DateTime(2026, 4, 5, 0, 0, 0, DateTimeKind.Unspecified),
+                    EndDate = new DateTime(2026, 5, 5, 0, 0, 0, DateTimeKind.Unspecified),
                     MaxParticipants = 30, 
                     CurrentParticipants = 30, 
                     Status = DepartureStatus.Full,

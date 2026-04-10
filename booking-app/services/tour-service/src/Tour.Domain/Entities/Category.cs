@@ -6,7 +6,7 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public ICollection<Tour> Tours { get; set; } = new List<Tour>();
+        public ICollection<TravelTour> Tours { get; set; } = new List<TravelTour>();
 
         public bool IsDeleted {get; set;}
         public string CreatedDate {get; set;} = string.Empty;
