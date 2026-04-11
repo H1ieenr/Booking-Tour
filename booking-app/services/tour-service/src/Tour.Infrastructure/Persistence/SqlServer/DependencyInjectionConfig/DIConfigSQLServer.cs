@@ -4,12 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Domain.Interfaces;
+using Shared.Persistence;
 
 namespace Infrastructure.Persistence
 {
     public static class DIConfigSQLServer
     {
-        public static IServiceCollection UseSqlServer(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddTourInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
@@ -25,9 +27,9 @@ namespace Infrastructure.Persistence
                     w.Ignore(RelationalEventId.PendingModelChangesWarning));
             });
         
-            // Bạn nên khai báo đăng ký Repository tại đây để tập trung quản lý
-            // services.AddScoped<ITourRepository, TourRepository>();
-
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<,>));
+            services.AddScoped<ITravelTourRepository, TravelTourRepository>();
+            
             return services;
         }
     }

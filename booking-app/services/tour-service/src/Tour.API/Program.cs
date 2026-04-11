@@ -1,11 +1,21 @@
 using Infrastructure.Persistence;
+using Shared.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>(); 
+});
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 builder.Services.AddOpenApi();
-builder.Services.UseSqlServer(builder.Configuration);
+builder.Services.AddTourInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

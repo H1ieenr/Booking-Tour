@@ -4,26 +4,26 @@ namespace Domain.Entities
 {
     public class Departure
     {
-        public int Id { get; set; }
-        public DateTime StartDate { get; set; } 
-        public DateTime EndDate { get; set; }  
-        public int MaxParticipants { get; set; } 
-        public int CurrentParticipants { get; set; } 
-        public DepartureStatus Status { get; set; }
+        public int id { get; set; }
+        public DateTime start_date { get; set; } 
+        public DateTime end_date { get; set; }  
+        public int max_participants { get; set; } 
+        public int current_participants { get; set; } 
+        public DepartureStatus status { get; set; }
 
 
-        public decimal AdultPrice { get; set; }     // Người lớn (>= 12 tuổi)
-        public decimal ChildPrice { get; set; }     // Trẻ em (5 - 11 tuổi)
-        public decimal InfantPrice { get; set; } 
+        public decimal adult_price { get; set; }     // Người lớn (>= 12 tuổi)
+        public decimal child_price { get; set; }     // Trẻ em (5 - 11 tuổi)
+        public decimal infant_price { get; set; } 
 
-        public bool IsDeleted {get; set;}
-        public string CreatedDate {get; set;} = string.Empty;
-        public string CreatedBy {get; set;} = string.Empty;
-        public string? UpdatedBy {get; set;} = string.Empty;
-        public DateTime? UpdatedDate { get; set; } 
+        public bool is_deleted {get; set;}
+        public string created_date {get; set;} = string.Empty;
+        public string created_by {get; set;} = string.Empty;
+        public string? updated_by {get; set;} = string.Empty;
+        public DateTime? updated_date { get; set; } 
 
-        public int TourId { get; set; }
-        public TravelTour? Tour { get; set; }
-        public ICollection<VehicleAssignment> VehicleAssignments { get; set; } = new List<VehicleAssignment>();
+        public int travel_tour_id { get; set; }
+        public TravelTour? travel_tour { get; set; }
+        public ICollection<VehicleAssignment> vehicle_assignments { get; set; } = new List<VehicleAssignment>();
     }
 }

@@ -10,85 +10,85 @@ namespace Infrastructure.Persistence
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Tour Miền Trung"},
-                new Category { Id = 2, Name = "Tour Miền Bắc"}
+                new Category { id = 1, name = "Tour Miền Trung"},
+                new Category { id = 2, name = "Tour Miền Bắc"}
             );
 
             modelBuilder.Entity<Vehicle>().HasData(
-                new Vehicle { Id = 1, Name = "Ford Transit Luxury", LicensePlate = "29A-111.11", Capacity = 16, DriverName = "Nguyễn Văn A", DriverPhone = "0901234567", Status = VehicleStatus.Active, CurrentOdometer = 15000 },
-                new Vehicle { Id = 2, Name = "Hyundai Universe", LicensePlate = "29B-222.22", Capacity = 45, DriverName = "Trần Văn B", DriverPhone = "0907654321", Status = VehicleStatus.Active, CurrentOdometer = 50000 }
+                new Vehicle { id = 1, name = "Ford Transit Luxury", license_plate = "29A-111.11", capacity = 16, driver_name = "Nguyễn Văn A", driver_phone = "0901234567", status = VehicleStatus.Active, current_odometer = 15000 },
+                new Vehicle { id = 2, name = "Hyundai Universe", license_plate = "29B-222.22", capacity = 45, driver_name = "Trần Văn B", driver_phone = "0907654321", status = VehicleStatus.Active, current_odometer = 50000 }
             );
 
             modelBuilder.Entity<VehicleAssignment>().HasData(
                 new VehicleAssignment 
                 { 
-                    Id = 1, DepartureId = 1, VehicleId = 1, 
-                    FromDate = new DateTime(2026, 4, 5, 0, 0, 0, DateTimeKind.Unspecified), ToDate = new DateTime(2026, 7, 5, 0, 0, 0, DateTimeKind.Unspecified),
-                    Note = "Đón tại KS Mường Thanh" 
+                    id = 1, departure_id = 1, vehicle_id = 1, 
+                    from_date = new DateTime(2026, 4, 5, 0, 0, 0, DateTimeKind.Unspecified), to_date = new DateTime(2026, 7, 5, 0, 0, 0, DateTimeKind.Unspecified),
+                    note = "Đón tại KS Mường Thanh" 
                 }
             );
 
             modelBuilder.Entity<TravelTour>().HasData(
                 new TravelTour 
                 { 
-                    Id = 1, 
-                    Title = "Tour Đà Nẵng - Hội An", 
-                    CodeTour = "DNA001", 
-                    BasePrice = 5000000, 
-                    Location = "Đà Nẵng", 
-                    CategoryId = 1, 
-                    TotalDays = 3, 
-                    TotalNights = 2,
-                    VehicleDescription = "Xe du lịch đời mới 45 chỗ",
-                    Includes = "Khách sạn 3 sao, Ăn sáng, Vé tham quan",
-                    Excludes = "Vé máy bay, Chi phí cá nhân",
-                    TermsAndConditions = "Áp dụng cho đoàn từ 10 người",
-                    CancelPolicy = "Hủy trước 7 ngày không mất phí"
+                    id = 1, 
+                    title = "Tour Đà Nẵng - Hội An", 
+                    code_tour = "DNA001", 
+                    base_price = 5000000, 
+                    location = "Đà Nẵng", 
+                    category_id = 1, 
+                    total_days = 3, 
+                    total_nights = 2,
+                    vehicle_description = "Xe du lịch đời mới 45 chỗ",
+                    includes = "Khách sạn 3 sao, Ăn sáng, Vé tham quan",
+                    excludes = "Vé máy bay, Chi phí cá nhân",
+                    terms_and_conditions = "Áp dụng cho đoàn từ 10 người",
+                    cancel_policy = "Hủy trước 7 ngày không mất phí"
                 },
                 new TravelTour
                 { 
-                    Id = 2, 
-                    Title = "Khám phá Fansipan Sapa", 
-                    CodeTour = "SAP002", 
-                    BasePrice = 4500000, 
-                    Location = "Lào Cai", 
-                    CategoryId = 2, 
-                    TotalDays = 2, 
-                    TotalNights = 1,
-                    VehicleDescription = "Xe giường nằm chất lượng cao",
-                    Includes = "Vé cáp treo, Khách sạn, Hướng dẫn viên",
-                    Excludes = "Đồ uống trong bữa ăn",
-                    TermsAndConditions = "Trẻ em cần có CMND/Khai sinh",
-                    CancelPolicy = "Hủy sau 3 ngày mất 50% phí"
+                    id = 2, 
+                    title = "Khám phá Fansipan Sapa", 
+                    code_tour = "SAP002", 
+                    base_price = 4500000, 
+                    location = "Lào Cai", 
+                    category_id = 2, 
+                    total_days = 2, 
+                    total_nights = 1,
+                    vehicle_description = "Xe giường nằm chất lượng cao",
+                    includes = "Vé cáp treo, Khách sạn, Hướng dẫn viên",
+                    excludes = "Đồ uống trong bữa ăn",
+                    terms_and_conditions = "Trẻ em cần có CMND/Khai sinh",
+                    cancel_policy = "Hủy sau 3 ngày mất 50% phí"
                 }
             );
 
             modelBuilder.Entity<Departure>().HasData(
                 new Departure 
                 { 
-                    Id = 1, 
-                    TourId = 1, 
-                    StartDate = new DateTime(2026, 4, 4, 0, 0, 0, DateTimeKind.Unspecified),
-                    EndDate = new DateTime(2026, 6, 5, 0, 0, 0, DateTimeKind.Unspecified),
-                    MaxParticipants = 20, 
-                    CurrentParticipants = 5, 
-                    Status = DepartureStatus.Available,
-                    AdultPrice = 5200000,
-                    ChildPrice = 3900000,
-                    InfantPrice = 1000000
+                    id = 1, 
+                    travel_tour_id = 1, 
+                    start_date = new DateTime(2026, 4, 4, 0, 0, 0, DateTimeKind.Unspecified),
+                    end_date = new DateTime(2026, 6, 5, 0, 0, 0, DateTimeKind.Unspecified),
+                    max_participants = 20, 
+                    current_participants = 5, 
+                    status = DepartureStatus.Available,
+                    adult_price = 5200000,
+                    child_price = 3900000,
+                    infant_price = 1000000
                 },
                 new Departure 
                 { 
-                    Id = 2, 
-                    TourId = 2, 
-                    StartDate = new DateTime(2026, 4, 5, 0, 0, 0, DateTimeKind.Unspecified),
-                    EndDate = new DateTime(2026, 5, 5, 0, 0, 0, DateTimeKind.Unspecified),
-                    MaxParticipants = 30, 
-                    CurrentParticipants = 30, 
-                    Status = DepartureStatus.Full,
-                    AdultPrice = 4500000,
-                    ChildPrice = 3300000,
-                    InfantPrice = 500000
+                    id = 2, 
+                    travel_tour_id = 2, 
+                    start_date = new DateTime(2026, 4, 5, 0, 0, 0, DateTimeKind.Unspecified),
+                    end_date = new DateTime(2026, 5, 5, 0, 0, 0, DateTimeKind.Unspecified),
+                    max_participants = 30, 
+                    current_participants = 30, 
+                    status = DepartureStatus.Full,
+                    adult_price = 4500000,
+                    child_price = 3300000,
+                    infant_price = 500000
                 }
             );
         }

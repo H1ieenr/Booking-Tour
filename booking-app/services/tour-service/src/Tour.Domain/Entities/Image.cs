@@ -3,16 +3,16 @@ namespace Domain.Entities
 {
     public class Image
     {
-        public int Id { get; set; }
-        public string Url { get; set; } = string.Empty;
-        public bool IsPrimary { get; set; }
-        public int TourId { get; set; }
-        public TravelTour? Tour { get; set; }
+        public int id { get; set; }
+        public string url { get; set; } = string.Empty;
+        public bool is_primary { get; set; }
+        public int travel_tour_id { get; set; }
+        public TravelTour? travel_tour { get; set; }
 
-        public bool IsDeleted {get; set;}
-        public string CreatedDate {get; set;} = string.Empty;
-        public string CreatedBy {get; set;} = string.Empty;
-        public string? UpdatedBy {get; set;} = string.Empty;
-        public DateTime? UpdatedDate { get; set; } 
+        public bool is_deleted {get; set;}
+        public string created_date {get; set;} = string.Empty;
+        public string created_by {get; set;} = string.Empty;
+        public string? updated_by {get; set;} = string.Empty;
+        public DateTime? updated_date { get; set; } 
     }
 }

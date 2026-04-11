@@ -6,5 +6,11 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Tour.Domain</RootNamespace>
   </PropertyGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference
+      Include="..\..\..\..\shared_kernel_lib\src\Shared.Persistence\Shared.Persistence.csproj" />
+  </ItemGroup>
 </Project>

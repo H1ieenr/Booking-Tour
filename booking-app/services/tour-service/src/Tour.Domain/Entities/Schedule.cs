@@ -3,20 +3,20 @@ namespace Domain.Entities
 {
     public class Schedule
     {
-        public int Id { get; set; }
-        public int DayNumber { get; set; } 
-        public string Title { get; set; } = string.Empty; 
-        public string MealOfTheDay {get; set;} = string.Empty;
-        public string Content { get; set; } = string.Empty; 
-        public int TourId { get; set; }
-        public TravelTour? Tour { get; set; }
+        public int id { get; set; }
+        public int day_number { get; set; } 
+        public string title { get; set; } = string.Empty; 
+        public string meal_of_the_day {get; set;} = string.Empty;
+        public string content { get; set; } = string.Empty; 
+        public int travel_tour_id { get; set; }
+        public TravelTour? travel_tour { get; set; }
 
-        public ICollection<VehicleAssignment> VehicleAssignments { get; set; } = new List<VehicleAssignment>();
+        public ICollection<VehicleAssignment> vehicle_assignments { get; set; } = new List<VehicleAssignment>();
 
-        public bool IsDeleted {get; set;}
-        public string CreatedDate {get; set;} = string.Empty;
-        public string CreatedBy {get; set;} = string.Empty;
-        public string? UpdatedBy {get; set;} = string.Empty;
-        public DateTime? UpdatedDate { get; set; } 
+        public bool is_deleted {get; set;}
+        public string created_date {get; set;} = string.Empty;
+        public string created_by {get; set;} = string.Empty;
+        public string? updated_by {get; set;} = string.Empty;
+        public DateTime? updated_date { get; set; } 
     }
 }

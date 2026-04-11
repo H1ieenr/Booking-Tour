@@ -17,6 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tour.Domain\Tour.Domain.csproj" />
+    <ProjectReference
+      Include="..\..\..\..\shared_kernel_lib\src\Shared.Persistence\Shared.Persistence.csproj" />
+
   </ItemGroup>
 
 </Project>

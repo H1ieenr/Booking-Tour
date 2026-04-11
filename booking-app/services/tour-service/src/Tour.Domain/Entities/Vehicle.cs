@@ -4,22 +4,22 @@ namespace Domain.Entities
 {
     public class Vehicle
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;      
-        public string LicensePlate { get; set; } = string.Empty; 
-        public int Capacity { get; set; }                     
-        public string DriverName { get; set; } = string.Empty; 
-        public string DriverPhone { get; set; } = string.Empty;
-        public VehicleStatus Status { get; set; } = VehicleStatus.Active;
-        public int CurrentOdometer { get; set; }
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;      
+        public string license_plate { get; set; } = string.Empty; 
+        public int capacity { get; set; }                     
+        public string driver_name { get; set; } = string.Empty; 
+        public string driver_phone { get; set; } = string.Empty;
+        public VehicleStatus status { get; set; } = VehicleStatus.Active;
+        public int current_odometer { get; set; }
         
-        public ICollection<VehicleAssignment> Assignments { get; set; } = new List<VehicleAssignment>();
+        public ICollection<VehicleAssignment> assignments { get; set; } = new List<VehicleAssignment>();
 
 
-        public bool IsDeleted {get; set;}
-        public string CreatedDate {get; set;} = string.Empty;
-        public string CreatedBy {get; set;} = string.Empty;
-        public string? UpdatedBy {get; set;} = string.Empty;
-        public DateTime? UpdatedDate { get; set; } 
+        public bool is_deleted {get; set;}
+        public string created_date {get; set;} = string.Empty;
+        public string created_by {get; set;} = string.Empty;
+        public string? updated_by {get; set;} = string.Empty;
+        public DateTime? updated_date { get; set; } 
     }
 }
