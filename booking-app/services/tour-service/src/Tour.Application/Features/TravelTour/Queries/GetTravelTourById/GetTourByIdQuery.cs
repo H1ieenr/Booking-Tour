@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence
+namespace Tour.Application
 {
-    public class OrderRepository
-    {
-        
-    }
+    public record GetTourByIdQuery(int Id);
 }

@@ -9,5 +9,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  <!-- <ProjectReference Include="../Tour.Domain/Tour.Domain.csproj" /> -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\shared_kernel_lib\src\Shared.Common\Shared.Common.csproj" />
+    <ProjectReference Include="..\..\..\..\shared_kernel_lib\src\Shared.Exceptions\Shared.Exceptions.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Dapper" Version="2.1.72" />
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.6" />
+  </ItemGroup>
 </Project>

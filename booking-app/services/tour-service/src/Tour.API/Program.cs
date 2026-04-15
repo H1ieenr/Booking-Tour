@@ -1,5 +1,6 @@
 using Infrastructure.Persistence;
 using Shared.Exceptions;
+using Tour.Application;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,9 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 builder.Services.AddOpenApi();
 builder.Services.AddTourInfrastructure(builder.Configuration);
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
@@ -25,7 +29,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
-
+app.UseExceptionHandler();
 app.MapControllers();
 
 app.Run();

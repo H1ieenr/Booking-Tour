@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
@@ -7,43 +6,48 @@ using System.Text.Json;
 
 namespace Shared.Exceptions
 {
-    public static class GlobalExceptionHandler
+    public class GlobalExceptionHandler : IExceptionHandler
     {
-        public static void UseSharedErrorHandler(this IApplicationBuilder app, IHostEnvironment env)
+        private readonly IHostEnvironment _env;
+        public GlobalExceptionHandler(IHostEnvironment env)
         {
-            app.UseExceptionHandler(appError =>
+            _env = env;
+        }
+        public async ValueTask<bool> TryHandleAsync(
+            HttpContext httpContext,
+            Exception exception,
+            CancellationToken cancellationToken)
+        {
+            var statusCode = HttpStatusCode.InternalServerError;
+            var caption = "Lỗi hệ thống";
+            var message = "Đã có lỗi xảy ra. Vui lòng thử lại sau.";
+
+            if (exception is BaseException baseException)
             {
-                appError.Run(async context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    context.Response.ContentType = "application/json";
+                statusCode = baseException.StatusCode;
+                caption = baseException.Code; // Ví dụ: "NOT_FOUND"
+                message = baseException.Message;
+            }
 
-                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    if (contextFeature != null)
-                    {
-                        // Log lỗi chi tiết thông qua Serilog
-                        //Log.Error(contextFeature.Error, "Xảy ra lỗi chưa được xử lý (Unhandled Exception)");
-                        var errorResponse = new
-                        {
-                            Success = false,
-                            Caption = "Lỗi hệ thống",
-                            Message = env.IsDevelopment()
-                                ? contextFeature.Error.Message
-                                : "Đã có lỗi xảy ra. Vui lòng thử lại sau hoặc liên hệ bộ phận hỗ trợ.",
-                            Data = (object?)null,
-                            StackTrace = env.IsDevelopment() ? contextFeature.Error.StackTrace : null
-                        };
+            httpContext.Response.StatusCode = (int)statusCode;
+            httpContext.Response.ContentType = "application/json";
 
-                        var jsonOptions = new JsonSerializerOptions
-                        {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                            WriteIndented = true
-                        };
+            var errorResponse = new
+            {
+                Success = false,
+                Caption = caption,
+                Message = message,
+                Data = _env.IsDevelopment() ? new { Detail = exception.ToString() } : null
+            };
 
-                        await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse, jsonOptions));
-                    }
-                });
-            });
+            var jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            await httpContext.Response.WriteAsJsonAsync(errorResponse, jsonOptions, cancellationToken);
+
+            return true;
         }
     }
 }

@@ -3,8 +3,8 @@ using System.Linq.Expressions;
 
 namespace Shared.Persistence
 {
-    public class GenericRepository<T, TContext> : IGenericRepository<T> 
-        where T : class 
+    public class GenericRepository<T, TContext> : IGenericRepository<T>
+        where T : class
         where TContext : DbContext
     {
         protected readonly TContext _context;
@@ -15,15 +15,15 @@ namespace Shared.Persistence
             _context = context;
             _dbSet = context.Set<T>();
         }
-
-        public virtual async Task<T?> GetByIdAsync(int id) => await _dbSet.FindAsync(id);
-
-        public virtual async Task<IEnumerable<T>> GetAllAsync() => await _dbSet.AsNoTracking().ToListAsync();
+        public virtual async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+                                 => await _dbSet.FindAsync(new object[] { id }, cancellationToken);
+        public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default) => await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
 
         public virtual async Task<IEnumerable<T>> FindAsync(
             Expression<Func<T, bool>>? filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-            string includeProperties = "")
+            string includeProperties = "",
+            CancellationToken cancellationToken = default)
         {
             IQueryable<T> query = _dbSet;
 
@@ -45,8 +45,8 @@ namespace Shared.Persistence
             {
                 return await orderBy(query).AsNoTracking().ToListAsync();
             }
-            
-            return await query.AsNoTracking().ToListAsync();
+
+            return await query.AsNoTracking().ToListAsync(cancellationToken);
         }
 
         public virtual async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
@@ -65,6 +65,6 @@ namespace Shared.Persistence
 
         public virtual void DeleteRange(IEnumerable<T> entities) => _dbSet.RemoveRange(entities);
 
-        public virtual async Task<bool> SaveChangesAsync() => await _context.SaveChangesAsync() > 0;
+        public virtual async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default) => await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 }
