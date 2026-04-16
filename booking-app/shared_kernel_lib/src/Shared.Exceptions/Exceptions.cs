@@ -18,7 +18,7 @@ namespace Shared.Exceptions
     }
     public class NotFoundException : BaseException
     {
-        public NotFoundException(string message, string code = "NOT_FOUND")
+        public NotFoundException(string message = "Không có dữ liệu! ", string code = "NOT_FOUND")
             : base(message, code, HttpStatusCode.NotFound) { }
     }
 

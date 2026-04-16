@@ -8,10 +8,11 @@ namespace Tour.Application
         public TravelTourMappingProfile()
         {
             // 1. Map từ Command sang Entity 
-            CreateMap<CreateTourCommand, TravelTour>();
-                
+            CreateMap<CreateTravelTourRequestDto, TravelTour>();
+            
+
             // 2. Map từ Entity sang DTO 
-            CreateMap<TravelTour, TravelTourDto>();
+            CreateMap<TravelTour, GetTravelTourByIdDTO>();
         }
     }
 }

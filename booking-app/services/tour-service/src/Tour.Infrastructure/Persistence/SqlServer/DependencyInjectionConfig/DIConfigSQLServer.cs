@@ -1,11 +1,9 @@
 
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Domain.Interfaces;
-using Shared.Persistence;
 
 namespace Infrastructure.Persistence
 {
@@ -22,14 +20,14 @@ namespace Infrastructure.Persistence
                     b.MigrationsAssembly("Tour.Infrastructure");
                     b.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
                 });
-                    
-                options.ConfigureWarnings(w => 
+
+                options.ConfigureWarnings(w =>
                     w.Ignore(RelationalEventId.PendingModelChangesWarning));
             });
-        
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<,>));
+
+            //services.AddScoped(typeof(IGenericRepository<>), typeof(TravelTourRepository<>));
             services.AddScoped<ITravelTourRepository, TravelTourRepository>();
-            
+
             return services;
         }
     }

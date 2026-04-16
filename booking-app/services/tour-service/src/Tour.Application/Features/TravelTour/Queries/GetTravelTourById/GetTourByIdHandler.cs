@@ -4,17 +4,21 @@ using Microsoft.Extensions.Configuration;
 using Shared.Common;
 using Shared.Exceptions;
 using System.Data;
+using MediatR;
+using AutoMapper;
 
 namespace Tour.Application
 {
-    public class GetTourByIdHandler
+    public class GetTourByIdHandler : IRequestHandler<GetTourByIdQuery, OperationResult<GetTravelTourByIdDTO>>
     {
         private readonly string _connectionString;
-        public GetTourByIdHandler(IConfiguration configuration)
+         private readonly IMapper _mapper; 
+        public GetTourByIdHandler(IConfiguration configuration, IMapper mapper)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+            _mapper = mapper;
         }
-        public async Task<OperationResult<TravelTourDto>> Handle(GetTourByIdQuery query)
+        public async Task<OperationResult<GetTravelTourByIdDTO>> Handle(GetTourByIdQuery query, CancellationToken cancellationToken)
         {
             using IDbConnection db = new SqlConnection(_connectionString);
             const string sql = @"
@@ -22,15 +26,18 @@ namespace Tour.Application
                    FROM TravelTours t
                    LEFT JOIN Categories c ON t.CategoryId = c.Id
                    WHERE t.Id = @Id";
+            var command = new CommandDefinition(sql, 
+                        parameters: query.model,
+                        cancellationToken: cancellationToken);
 
-            var result = await db.QueryFirstOrDefaultAsync<TravelTourDto>(sql, new { Id = query.Id });
+            var result = await db.QueryFirstOrDefaultAsync<GetTravelTourByIdDTO>(command);
 
             if (result == null)
             {
-                throw new NotFoundException($"Không tìm thấy Tour với ID: {query.Id}");
+                throw new NotFoundException($"{query.model.id}");
             }
-
-            return OperationResult<TravelTourDto>.Success(result);
+            var dto = _mapper.Map<GetTravelTourByIdDTO>(result);
+            return OperationResult<GetTravelTourByIdDTO>.Success(result);
         }
 
     }

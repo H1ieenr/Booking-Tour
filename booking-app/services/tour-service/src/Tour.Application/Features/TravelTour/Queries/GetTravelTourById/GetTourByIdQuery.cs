@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Shared.Common;
+using MediatR;
 
 namespace Tour.Application
 {
-    public record GetTourByIdQuery(int Id);
+    public record GetTourByIdQuery(GetTravelTourByIdRequestDTO model) : IRequest<OperationResult<GetTravelTourByIdDTO>>;
 }
