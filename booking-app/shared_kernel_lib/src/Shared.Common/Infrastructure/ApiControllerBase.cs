@@ -29,7 +29,7 @@ namespace Shared.Common
 
         protected string? email => User.FindFirst(ClaimTypes.Email)?.Value;
         protected string? user_name => User.Identity?.Name;
-        protected IActionResult ProcessResult<T>(Shared.Common.OperationResult<T> result)
+        protected IActionResult ProcessResult<T>(OperationResult<T> result)
         {
             if (result.IsSuccess) return Ok(result);
             return BadRequest(result);

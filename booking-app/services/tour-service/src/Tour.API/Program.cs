@@ -1,6 +1,6 @@
 using Infrastructure.Persistence;
 using Shared.Exceptions;
-using Tour.Application;
+using Application.Common;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);

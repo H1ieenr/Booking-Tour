@@ -7,7 +7,7 @@ using System.Data;
 using MediatR;
 using AutoMapper;
 
-namespace Tour.Application
+namespace Application.Features
 {
     public class GetTourByIdHandler : IRequestHandler<GetTourByIdQuery, OperationResult<GetTravelTourByIdDTO>>
     {

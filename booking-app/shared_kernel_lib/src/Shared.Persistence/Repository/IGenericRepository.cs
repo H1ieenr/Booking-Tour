@@ -19,7 +19,6 @@ namespace Shared.Persistence
         void UpdateRange(IEnumerable<T> entities);
         void Delete(T entity);
         void DeleteRange(IEnumerable<T> entities);
-        
         Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

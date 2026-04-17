@@ -1,7 +1,7 @@
 using Shared.Common;
 using MediatR;
 
-namespace Tour.Application
+namespace Application.Features
 {
     public record GetTourByIdQuery(GetTravelTourByIdRequestDTO model) : IRequest<OperationResult<GetTravelTourByIdDTO>>;
 }

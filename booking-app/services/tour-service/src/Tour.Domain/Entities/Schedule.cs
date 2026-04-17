@@ -14,7 +14,7 @@ namespace Domain.Entities
         public ICollection<VehicleAssignment> vehicle_assignments { get; set; } = new List<VehicleAssignment>();
 
         public bool is_deleted {get; set;}
-        public string created_date {get; set;} = string.Empty;
+        public DateTime? created_date {get; set;}
         public string created_by {get; set;} = string.Empty;
         public string? updated_by {get; set;} = string.Empty;
         public DateTime? updated_date { get; set; } 

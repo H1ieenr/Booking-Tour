@@ -1,11 +1,10 @@
 using Domain.Entities;
 using Domain.Interfaces;
 using Shared.Common;
-using Shared.Exceptions;
 using MediatR;
 using AutoMapper;
 
-namespace Tour.Application
+namespace Application.Features
 {
     public class CreateTravelTourHandler : IRequestHandler<CreateTravelTourCommand, OperationResult<int>>
     {
@@ -26,11 +25,8 @@ namespace Tour.Application
             {
                 var tour = _mapper.Map<TravelTour>(command.model);
                 await _travelTourRepository.AddAsync(tour);
-
-                var result = await _travelTourRepository.SaveChangesAsync(cancellationToken);
-                if (result) return OperationResult<int>.Created(tour.id);
-                
-                return OperationResult<int>.Failure();
+                await _travelTourRepository.SaveChangesAsync(cancellationToken);
+                return OperationResult<int>.Created(tour.id);
             }
             catch (Exception ex)
             {

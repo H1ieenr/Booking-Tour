@@ -20,9 +20,9 @@ namespace Domain.Entities
         public DateTime assigned_at { get; set; } = DateTime.UtcNow;
 
         public bool is_deleted {get; set;}
-        public string created_date {get; set;} = string.Empty;
+        public DateTime? created_date {get; set;}
         public string created_by {get; set;} = string.Empty;
         public string? updated_by {get; set;} = string.Empty;
-        public DateTime? updated_date { get; set; }  
+        public DateTime? updated_date { get; set; } 
     }
 }

@@ -25,8 +25,10 @@ namespace Domain.Entities
         public string terms_and_conditions { get; set; } = string.Empty; 
         public string cancel_policy { get; set; } = string.Empty;      
 
+        public bool active { get; set; }
+
         public bool is_deleted {get; set;}
-        public string created_date {get; set;} = string.Empty;
+        public DateTime? created_date {get; set;}
         public string created_by {get; set;} = string.Empty;
         public string? updated_by {get; set;} = string.Empty;
         public DateTime? updated_date { get; set; } 

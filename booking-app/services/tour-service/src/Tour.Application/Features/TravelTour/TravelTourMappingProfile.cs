@@ -1,17 +1,19 @@
+using System;
+using Application.Common;
 using AutoMapper;
 using Domain.Entities;
 
-namespace Tour.Application
+namespace Application.Features
 {
     public class TravelTourMappingProfile : Profile
     {
         public TravelTourMappingProfile()
         {
             // 1. Map từ Command sang Entity 
-            CreateMap<CreateTravelTourRequestDto, TravelTour>();
-            
+            CreateMap<CreateTravelTourRequestDTO, TravelTour>()
+            .ForMember(dest => dest.created_date, opt => opt.MapFrom(src => DatetimeExtension.ConvertDatetimeVN()));;
 
-            // 2. Map từ Entity sang DTO 
+            // 2. Map từ Entity sang DTO   
             CreateMap<TravelTour, GetTravelTourByIdDTO>();
         }
     }

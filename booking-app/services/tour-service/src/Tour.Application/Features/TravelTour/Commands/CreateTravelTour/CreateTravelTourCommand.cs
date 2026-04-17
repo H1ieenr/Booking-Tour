@@ -1,6 +1,6 @@
 using Shared.Common;
 using MediatR;
-namespace Tour.Application
+namespace Application.Features
 {
-    public record CreateTravelTourCommand(CreateTravelTourRequestDto model) : IRequest<OperationResult<int>>;
+    public record CreateTravelTourCommand(CreateTravelTourRequestDTO model) : IRequest<OperationResult<int>>;
 }

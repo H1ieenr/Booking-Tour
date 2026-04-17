@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Domain.Interfaces;
+using Shared.Persistence;
 
 namespace Infrastructure.Persistence
 {
@@ -12,7 +13,6 @@ namespace Infrastructure.Persistence
         public static IServiceCollection AddTourInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-
             services.AddDbContext<TourDbContext>(options =>
             {
                 options.UseSqlServer(connectionString, b =>
@@ -24,9 +24,9 @@ namespace Infrastructure.Persistence
                 options.ConfigureWarnings(w =>
                     w.Ignore(RelationalEventId.PendingModelChangesWarning));
             });
-
-            //services.AddScoped(typeof(IGenericRepository<>), typeof(TravelTourRepository<>));
+            services.AddScoped<DbContext>(provider => provider.GetRequiredService<TourDbContext>());
             services.AddScoped<ITravelTourRepository, TravelTourRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             return services;
         }

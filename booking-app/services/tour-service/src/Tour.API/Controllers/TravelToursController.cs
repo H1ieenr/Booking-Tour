@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Tour.Application;
+using Application.Features;
 using Shared.Common;
 using MediatR;
 
-namespace Tour.API.Controllers
+namespace API.Controllers
 {
     [Route("api/v1/web/travel-tour")]
     public class TravelToursController : ApiControllerBase
@@ -25,13 +25,11 @@ namespace Tour.API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] CreateTravelTourRequestDto model)
+        public async Task<IActionResult> Create([FromBody] CreateTravelTourRequestDTO model)
         {
             var command = new CreateTravelTourCommand(model);
             var result = await _mediator.Send(command, HttpContext.RequestAborted);
             return ProcessResult(result);
         }
-
-
     }
 }
