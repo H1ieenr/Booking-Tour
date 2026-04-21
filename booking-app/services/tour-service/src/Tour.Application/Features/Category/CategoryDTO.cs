@@ -4,7 +4,11 @@ namespace Application.Features
 {
     public record CategoryItemDTO
     {
-
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public string? image { get; set; }
+        public int? sequence { get; set; }
+        public bool active { get; set; }
     }
     #region CreateCategory
     public record CreateCategoryRequestDTO
@@ -30,7 +34,6 @@ namespace Application.Features
     public record GetCategoryByIdRequestDTO
     {
         public int id { get; set; }
-        public int? user_id { get; set; }
     }
     public record GetCategoryByIdDTO : CategoryItemDTO
     {

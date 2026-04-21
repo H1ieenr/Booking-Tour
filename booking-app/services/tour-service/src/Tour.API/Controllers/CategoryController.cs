@@ -15,15 +15,14 @@ namespace Tour.API.Controllers
             _mediator = mediator;
         }
 
-        // [HttpGet("view")]
-        // public async Task<IActionResult> GetById([FromQuery] GetTravelTourByIdRequestDTO model)
-        // {
-        //     var query = new GetTourByIdQuery(model);
-        //     var result = await _mediator.Send(query, HttpContext.RequestAborted);
+        [HttpGet("view")]
+        public async Task<IActionResult> GetById([FromQuery] GetCategoryByIdRequestDTO model)
+        {
+            var query = new GetCategoryByIdQuery(model);
+            var result = await _mediator.Send(query, HttpContext.RequestAborted);
 
-        //     return ProcessResult(result);
-        // }
-
+            return ProcessResult(result);
+        }
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromForm] CreateCategoryRequestDTO model)
         {
@@ -35,6 +34,13 @@ namespace Tour.API.Controllers
         public async Task<IActionResult> Update([FromForm] UpdateCategoryRequestDTO model)
         {
             var command = new UpdateCategoryCommand(model);
+            var result = await _mediator.Send(command, HttpContext.RequestAborted);
+            return ProcessResult(result);
+        }
+        [HttpPost("delete")]
+        public async Task<IActionResult> Delete([FromQuery] DeleteCategoryRequestDTO model)
+        {
+            var command = new DeleteCategoryCommand(model);
             var result = await _mediator.Send(command, HttpContext.RequestAborted);
             return ProcessResult(result);
         }

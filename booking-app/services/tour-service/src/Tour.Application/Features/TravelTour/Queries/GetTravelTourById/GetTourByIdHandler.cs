@@ -36,7 +36,6 @@ namespace Application.Features
             {
                 throw new NotFoundException($"{query.model.id}");
             }
-            var dto = _mapper.Map<GetTravelTourByIdDTO>(result);
             return OperationResult<GetTravelTourByIdDTO>.Success(result);
         }
 
