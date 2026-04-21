@@ -25,9 +25,16 @@ namespace Tour.API.Controllers
         // }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] CreateCategoryRequestDTO model)
+        public async Task<IActionResult> Create([FromForm] CreateCategoryRequestDTO model)
         {
             var command = new CreateCategoryCommand(model);
+            var result = await _mediator.Send(command, HttpContext.RequestAborted);
+            return ProcessResult(result);
+        }
+        [HttpPost("update")]
+        public async Task<IActionResult> Update([FromForm] UpdateCategoryRequestDTO model)
+        {
+            var command = new UpdateCategoryCommand(model);
             var result = await _mediator.Send(command, HttpContext.RequestAborted);
             return ProcessResult(result);
         }
