@@ -9,7 +9,15 @@ namespace Application.Features
         public string? image { get; set; }
         public int? sequence { get; set; }
         public bool active { get; set; }
+        public DateTime? created_date { get; set; }
     }
+    #region GetCategories
+    public record GetCategoriesRequestDTO
+    {
+        public string search_text { get; set; } = string.Empty;
+        public bool? is_active { get; set; }
+    };
+    #endregion
     #region CreateCategory
     public record CreateCategoryRequestDTO
     {
