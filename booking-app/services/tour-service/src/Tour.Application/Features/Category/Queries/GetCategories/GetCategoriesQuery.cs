@@ -7,6 +7,10 @@ namespace Application.Features
     {
         public GetCategoriesRequestDTO model {get; set;}
 
-        public GetCategoriesQuery(GetCategoriesRequestDTO model){}
+        public GetCategoriesQuery(GetCategoriesRequestDTO _model)
+        {
+            model = _model;
+        }
+        
     }
 }
