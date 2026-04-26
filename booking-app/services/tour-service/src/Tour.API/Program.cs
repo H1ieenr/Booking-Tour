@@ -2,6 +2,7 @@ using Infrastructure.Persistence;
 using Shared.Exceptions;
 using Application.Common;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddTourInfrastructure(builder.Configuration);
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 builder.Services.AddApplicationServices();
+builder.Services.AddSharedInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

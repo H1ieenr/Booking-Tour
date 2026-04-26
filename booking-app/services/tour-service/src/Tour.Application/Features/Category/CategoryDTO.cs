@@ -12,6 +12,21 @@ namespace Application.Features
         public bool active { get; set; }
         public DateTime? created_date { get; set; }
     }
+    #region GetCategoriesLookup
+    public record GetCategoriesLookupDTO
+    {
+        public int id { get; set; }
+        public string name { get; set; } = "";
+        public string? image { get; set; }
+        public int? sequence { get; set; }
+    }
+    #region GetCategoriesLookup
+    public class GetCategoriesLookupRequestDTO
+    {
+        public string? search_text { get; set; } = "";
+    };
+    #endregion
+    #endregion
     #region GetCategories
     public class GetCategoriesRequestDTO : PaginationParams
     {

@@ -23,7 +23,8 @@ namespace Application.Features
         {
             try
             {
-                var category = await _categoryRepository.GetByIdAsync(command.model.id);
+                var category = await _categoryRepository.GetByIdAsync(command.model.id, cancellationToken);
+                if (category == null) return OperationResult<int>.Nodata(command.model.id);
                 _mapper.Map(command.model, category);
 
                 _categoryRepository.Update(category);

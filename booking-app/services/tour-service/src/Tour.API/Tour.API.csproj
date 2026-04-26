@@ -24,6 +24,8 @@
     <ProjectReference Include="..\Tour.Infrastructure\Tour.Infrastructure.csproj" />
     <ProjectReference
       Include="..\..\..\..\shared_kernel_lib\src\Shared.Exceptions\Shared.Exceptions.csproj" />
+    <ProjectReference
+      Include="..\..\..\..\shared_infrastructure\src\Shared.ServiceExtentions\Shared.ServiceExtentions.csproj" />
   </ItemGroup>
 
 </Project>

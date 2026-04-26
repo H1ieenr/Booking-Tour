@@ -14,6 +14,14 @@ namespace Tour.API.Controllers
         {
             _mediator = mediator;
         }
+        [HttpGet("list-lookup")]
+        public async Task<IActionResult> GetCategoriesLookup([FromQuery] GetCategoriesLookupRequestDTO model)
+        {
+            var query = new GetCategoriesLookupQuery(model);
+            var result = await _mediator.Send(query, HttpContext.RequestAborted);
+
+            return Ok(result);
+        }
         [HttpGet("list")]
         public async Task<IActionResult> GetCategories([FromQuery] GetCategoriesRequestDTO model)
         {

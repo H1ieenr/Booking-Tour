@@ -25,6 +25,7 @@ namespace Application.Features
             {
                 var category = _mapper.Map<Category>(command.model);
                 await _categoryRepository.AddAsync(category);
+                await _categoryRepository.SaveChangesAsync(cancellationToken);
                 return OperationResult<int>.Created(category.id);
             }
             catch (Exception ex)

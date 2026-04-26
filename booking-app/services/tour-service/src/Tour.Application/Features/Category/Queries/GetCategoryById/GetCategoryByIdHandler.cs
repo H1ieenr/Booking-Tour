@@ -26,10 +26,7 @@ namespace Application.Features
 
             var result = await db.QueryFirstOrDefaultAsync<GetCategoryByIdDTO>(command);
 
-            if (result == null)
-            {
-                throw new NotFoundException($"{query.model.id}");
-            }
+            if (result == null) return OperationResult<GetCategoryByIdDTO>.Nodata(result);
             return OperationResult<GetCategoryByIdDTO>.Success(result);
         }
 

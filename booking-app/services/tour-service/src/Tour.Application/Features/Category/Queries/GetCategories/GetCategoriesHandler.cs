@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Application.Features
 {
-    public class GetCategoriesHandler : IRequestHandler<GetCategoriesQuery, PagedResult<CategoryItemDTO>>
+    public class GetCategoriesHandler : IRequestHandler<GetCategoriesQuery, OperationResult<PagedResult<CategoryItemDTO>>>
     {
         private readonly string _connectionString;
 
@@ -15,20 +15,30 @@ namespace Application.Features
             _connectionString = configuration.GetConnectionString("DefaultConnection")!;
         }
 
-        public async Task<PagedResult<CategoryItemDTO>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<OperationResult<PagedResult<CategoryItemDTO>>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
             using var db = new SqlConnection(_connectionString);
             var builder = new SqlBuilder();
 
-            var selector = builder.AddTemplate(@"
-            SELECT COUNT(*) FROM Categories /**where**/;
-            
-            SELECT id, name, image, sequence, active 
-            FROM Categories 
-            /**where**/
-            ORDER BY sequence
-            OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;",
-                new { request.PageSize, Offset = (request.PageNumber - 1) * request.PageSize });
+            var sortBy = request.model.SortBy?.ToLower() switch
+            {
+                "name" => "name",
+                "created_date" => "created_date",
+                "sequence" => "sequence",
+                _ => "sequence"
+            };
+            var sortDir = request.model.SortDir?.ToLower() == "desc" ? "DESC" : "ASC";
+
+            var sqlTemplate = $@" SELECT COUNT(*) FROM Categories /**where**/;
+                                SELECT id, name, image, sequence, active, created_date FROM Categories 
+                                /**where**/
+                                ORDER BY {sortBy} {sortDir} 
+                                OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;";
+            var selector = builder.AddTemplate(sqlTemplate, new
+            {
+                request.PageSize,
+                Offset = (request.PageNumber - 1) * request.PageSize
+            });
 
             builder.Where("is_deleted = 0");
 
@@ -46,8 +56,8 @@ namespace Application.Features
 
             var totalCount = await multi.ReadFirstAsync<int>();
             var items = (await multi.ReadAsync<CategoryItemDTO>()).ToList();
-
-            return new PagedResult<CategoryItemDTO>(items, totalCount, request.PageNumber, request.PageSize);
+            var result = new PagedResult<CategoryItemDTO>(items, totalCount, request.PageNumber, request.PageSize);
+            return OperationResult<PagedResult<CategoryItemDTO>>.Success(result);
         }
     }
 }

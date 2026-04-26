@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Domain.Interfaces;
-using Shared.Persistence;
 
 namespace Infrastructure.Persistence
 {

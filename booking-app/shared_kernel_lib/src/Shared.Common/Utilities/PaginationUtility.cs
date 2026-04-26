@@ -36,5 +36,7 @@ namespace Shared.Common
             get => _pageSize;
             set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
+        public string? SortBy { get; set; } = null;
+        public string? SortDir { get; set; } = "asc";
     }
 }

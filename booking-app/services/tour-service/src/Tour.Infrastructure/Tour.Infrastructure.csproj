@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.28.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,8 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tour.Domain\Tour.Domain.csproj" />
-    <ProjectReference
-      Include="..\..\..\..\shared_kernel_lib\src\Shared.Persistence\Shared.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\..\shared_kernel_lib\src\Shared.Persistence\Shared.Persistence.csproj" />
 
   </ItemGroup>
 
