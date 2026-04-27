@@ -5,6 +5,7 @@ namespace Domain.Entities
     {
         public int id { get; set; }
         public string url { get; set; } = string.Empty;
+        public string? public_id { get; set; }
         public bool is_primary { get; set; }
         public int travel_tour_id { get; set; }
         public TravelTour? travel_tour { get; set; }

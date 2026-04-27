@@ -1,7 +1,6 @@
 using CloudinaryDotNet;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using CloudinaryDotNet.Actions;
 
 namespace Shared.Infrastructure
@@ -9,6 +8,7 @@ namespace Shared.Infrastructure
     public class CloudinaryService : ICloudinaryService
     {
         private readonly Cloudinary _cloudinary;
+        private readonly string _rootFolder;
 
         public CloudinaryService(IConfiguration config)
         {
@@ -18,9 +18,10 @@ namespace Shared.Infrastructure
                 config["Cloudinary:ApiSecret"]
             );
             _cloudinary = new Cloudinary(acc);
+            _rootFolder = config["SettingConfig:Image:RootFolder"] ?? "webdev_uploads";
         }
 
-        public async Task<CloudinaryResponse> UploadImageAsync(IFormFile file, string folderName = "webdev_uploads")
+        public async Task<CloudinaryResponse> UploadImageAsync(IFormFile file, string folderName)
         {
             if (file == null || file.Length == 0)
             {
@@ -37,8 +38,7 @@ namespace Shared.Infrastructure
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Folder = folderName,
-                    // Tự động tối ưu hóa dung lượng và định dạng ảnh
+                    Folder = $"{_rootFolder}{folderName}",
                     Transformation = new Transformation().Quality("auto").FetchFormat("auto")
                 };
 
@@ -70,6 +70,18 @@ namespace Shared.Infrastructure
             }
         }
 
+        public async Task<List<CloudinaryResponse>> UploadImagesAsync(List<IFormFile> files, string folderName)
+        {
+            var responses = new List<CloudinaryResponse>();
+
+            foreach (var file in files)
+            {
+                var response = await UploadImageAsync(file, folderName);
+                responses.Add(response);
+            }
+            return responses;
+        }
+
         public async Task<bool> DeleteImageAsync(string publicId)
         {
             if (string.IsNullOrEmpty(publicId)) return false;
@@ -78,6 +90,19 @@ namespace Shared.Infrastructure
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
             return result.Result == "ok";
+        }
+
+        public async Task<List<CloudinaryResponse>> DeleteImagesAsync(List<string> publicIds)
+        {
+            var responses = new List<CloudinaryResponse>();
+
+            foreach (var publicId in publicIds)
+            {
+                var isSuccess = await DeleteImageAsync(publicId);
+                responses.Add(new CloudinaryResponse { IsSuccess = isSuccess });
+            }
+
+            return responses;
         }
     }
 }

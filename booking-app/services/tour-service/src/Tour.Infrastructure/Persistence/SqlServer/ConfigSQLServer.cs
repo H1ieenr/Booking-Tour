@@ -7,9 +7,9 @@ using Domain.Interfaces;
 
 namespace Infrastructure.Persistence
 {
-    public static class DIConfigSQLServer
+    public static class ConfigSQLServer
     {
-        public static IServiceCollection AddTourInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddConfigSQLServer(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<TourDbContext>(options =>
@@ -26,6 +26,7 @@ namespace Infrastructure.Persistence
             services.AddScoped<DbContext>(provider => provider.GetRequiredService<TourDbContext>());
             services.AddScoped<ITravelTourRepository, TravelTourRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
 
             return services;
         }

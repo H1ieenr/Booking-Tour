@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreate1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,6 +21,7 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    image_public_id = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     sequence = table.Column<int>(type: "int", nullable: true),
                     active = table.Column<bool>(type: "bit", nullable: false),
                     is_deleted = table.Column<bool>(type: "bit", nullable: false),
@@ -35,7 +36,7 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vehicle",
+                name: "Vehicles",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -55,7 +56,7 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vehicle", x => x.id);
+                    table.PrimaryKey("PK_Vehicles", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -137,6 +138,7 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    public_id = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     is_primary = table.Column<bool>(type: "bit", nullable: false),
                     travel_tour_id = table.Column<int>(type: "int", nullable: false),
                     is_deleted = table.Column<bool>(type: "bit", nullable: false),
@@ -185,7 +187,7 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VehicleAssignment",
+                name: "VehicleAssignments",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -207,35 +209,40 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VehicleAssignment", x => x.id);
+                    table.PrimaryKey("PK_VehicleAssignments", x => x.id);
                     table.ForeignKey(
-                        name: "FK_VehicleAssignment_Departures_departureid",
+                        name: "FK_VehicleAssignments_Departures_departureid",
                         column: x => x.departureid,
                         principalTable: "Departures",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_VehicleAssignment_Schedules_Scheduleid",
+                        name: "FK_VehicleAssignments_Schedules_Scheduleid",
                         column: x => x.Scheduleid,
                         principalTable: "Schedules",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_VehicleAssignment_Vehicle_vehicleid",
+                        name: "FK_VehicleAssignments_Vehicles_vehicleid",
                         column: x => x.vehicleid,
-                        principalTable: "Vehicle",
+                        principalTable: "Vehicles",
                         principalColumn: "id");
                 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "id", "active", "created_by", "created_date", "image", "is_deleted", "name", "sequence", "updated_by", "updated_date" },
+                columns: new[] { "id", "active", "created_by", "created_date", "image", "image_public_id", "is_deleted", "name", "sequence", "updated_by", "updated_date" },
                 values: new object[,]
                 {
-                    { 1, false, "", null, null, false, "Tour Miền Trung", null, "", null },
-                    { 2, false, "", null, null, false, "Tour Miền Bắc", null, "", null }
+                    { 1, false, "", null, null, null, false, "Tour Miền Trung", null, "", null },
+                    { 2, false, "", null, null, null, false, "Tour Miền Bắc", null, "", null }
                 });
 
             migrationBuilder.InsertData(
-                table: "Vehicle",
+                table: "VehicleAssignments",
+                columns: new[] { "id", "Scheduleid", "assigned_at", "created_by", "created_date", "departure_id", "departureid", "from_date", "is_deleted", "note", "to_date", "updated_by", "updated_date", "vehicle_id", "vehicleid" },
+                values: new object[] { 1, null, new DateTime(2026, 4, 27, 4, 5, 51, 423, DateTimeKind.Utc).AddTicks(8200), "", null, 1, null, new DateTime(2026, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Đón tại KS Mường Thanh", new DateTime(2026, 7, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "", null, 1, null });
+
+            migrationBuilder.InsertData(
+                table: "Vehicles",
                 columns: new[] { "id", "capacity", "created_by", "created_date", "current_odometer", "driver_name", "driver_phone", "is_deleted", "license_plate", "name", "status", "updated_by", "updated_date" },
                 values: new object[,]
                 {
@@ -244,17 +251,12 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "VehicleAssignment",
-                columns: new[] { "id", "Scheduleid", "assigned_at", "created_by", "created_date", "departure_id", "departureid", "from_date", "is_deleted", "note", "to_date", "updated_by", "updated_date", "vehicle_id", "vehicleid" },
-                values: new object[] { 1, null, new DateTime(2026, 4, 17, 9, 54, 21, 144, DateTimeKind.Utc).AddTicks(3220), "", null, 1, null, new DateTime(2026, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Đón tại KS Mường Thanh", new DateTime(2026, 7, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "", null, 1, null });
-
-            migrationBuilder.InsertData(
                 table: "TravelTours",
                 columns: new[] { "id", "active", "base_price", "cancel_policy", "category_id", "code_tour", "created_at", "created_by", "created_date", "description", "excludes", "includes", "is_deleted", "is_preferred", "location", "operator_id", "terms_and_conditions", "title", "total_days", "total_nights", "updated_by", "updated_date", "vehicle_description" },
                 values: new object[,]
                 {
-                    { 1, false, 5000000m, "Hủy trước 7 ngày không mất phí", 1, "DNA001", new DateTime(2026, 4, 17, 9, 54, 21, 144, DateTimeKind.Utc).AddTicks(4500), "", null, "", "Vé máy bay, Chi phí cá nhân", "Khách sạn 3 sao, Ăn sáng, Vé tham quan", false, false, "Đà Nẵng", 0, "Áp dụng cho đoàn từ 10 người", "Tour Đà Nẵng - Hội An", 3, 2, "", null, "Xe du lịch đời mới 45 chỗ" },
-                    { 2, false, 4500000m, "Hủy sau 3 ngày mất 50% phí", 2, "SAP002", new DateTime(2026, 4, 17, 9, 54, 21, 144, DateTimeKind.Utc).AddTicks(5660), "", null, "", "Đồ uống trong bữa ăn", "Vé cáp treo, Khách sạn, Hướng dẫn viên", false, false, "Lào Cai", 0, "Trẻ em cần có CMND/Khai sinh", "Khám phá Fansipan Sapa", 2, 1, "", null, "Xe giường nằm chất lượng cao" }
+                    { 1, false, 5000000m, "Hủy trước 7 ngày không mất phí", 1, "DNA001", new DateTime(2026, 4, 27, 4, 5, 51, 423, DateTimeKind.Utc).AddTicks(9450), "", null, "", "Vé máy bay, Chi phí cá nhân", "Khách sạn 3 sao, Ăn sáng, Vé tham quan", false, false, "Đà Nẵng", 0, "Áp dụng cho đoàn từ 10 người", "Tour Đà Nẵng - Hội An", 3, 2, "", null, "Xe du lịch đời mới 45 chỗ" },
+                    { 2, false, 4500000m, "Hủy sau 3 ngày mất 50% phí", 2, "SAP002", new DateTime(2026, 4, 27, 4, 5, 51, 424, DateTimeKind.Utc).AddTicks(590), "", null, "", "Đồ uống trong bữa ăn", "Vé cáp treo, Khách sạn, Hướng dẫn viên", false, false, "Lào Cai", 0, "Trẻ em cần có CMND/Khai sinh", "Khám phá Fansipan Sapa", 2, 1, "", null, "Xe giường nằm chất lượng cao" }
                 });
 
             migrationBuilder.InsertData(
@@ -287,18 +289,18 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                 column: "category_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleAssignment_departureid",
-                table: "VehicleAssignment",
+                name: "IX_VehicleAssignments_departureid",
+                table: "VehicleAssignments",
                 column: "departureid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleAssignment_Scheduleid",
-                table: "VehicleAssignment",
+                name: "IX_VehicleAssignments_Scheduleid",
+                table: "VehicleAssignments",
                 column: "Scheduleid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleAssignment_vehicleid",
-                table: "VehicleAssignment",
+                name: "IX_VehicleAssignments_vehicleid",
+                table: "VehicleAssignments",
                 column: "vehicleid");
         }
 
@@ -309,7 +311,7 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "VehicleAssignment");
+                name: "VehicleAssignments");
 
             migrationBuilder.DropTable(
                 name: "Departures");
@@ -318,7 +320,7 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                 name: "Schedules");
 
             migrationBuilder.DropTable(
-                name: "Vehicle");
+                name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "TravelTours");

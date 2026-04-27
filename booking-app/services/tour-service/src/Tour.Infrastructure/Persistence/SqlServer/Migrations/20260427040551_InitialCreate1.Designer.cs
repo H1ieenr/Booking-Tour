@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
 {
     [DbContext(typeof(TourDbContext))]
-    [Migration("20260417095421_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260427040551_InitialCreate1")]
+    partial class InitialCreate1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,9 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("image_public_id")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("is_deleted")
@@ -203,6 +206,9 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
 
                     b.Property<bool>("is_primary")
                         .HasColumnType("bit");
+
+                    b.Property<string>("public_id")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("travel_tour_id")
                         .HasColumnType("int");
@@ -375,7 +381,7 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                             cancel_policy = "Hủy trước 7 ngày không mất phí",
                             category_id = 1,
                             code_tour = "DNA001",
-                            created_at = new DateTime(2026, 4, 17, 9, 54, 21, 144, DateTimeKind.Utc).AddTicks(4500),
+                            created_at = new DateTime(2026, 4, 27, 4, 5, 51, 423, DateTimeKind.Utc).AddTicks(9450),
                             created_by = "",
                             description = "",
                             excludes = "Vé máy bay, Chi phí cá nhân",
@@ -399,7 +405,7 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
                             cancel_policy = "Hủy sau 3 ngày mất 50% phí",
                             category_id = 2,
                             code_tour = "SAP002",
-                            created_at = new DateTime(2026, 4, 17, 9, 54, 21, 144, DateTimeKind.Utc).AddTicks(5660),
+                            created_at = new DateTime(2026, 4, 27, 4, 5, 51, 424, DateTimeKind.Utc).AddTicks(590),
                             created_by = "",
                             description = "",
                             excludes = "Đồ uống trong bữa ăn",
@@ -468,7 +474,7 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Vehicle");
+                    b.ToTable("Vehicles");
 
                     b.HasData(
                         new
@@ -561,13 +567,13 @@ namespace Tour.Infrastructure.Persistence.SqlServer.Migrations
 
                     b.HasIndex("vehicleid");
 
-                    b.ToTable("VehicleAssignment");
+                    b.ToTable("VehicleAssignments");
 
                     b.HasData(
                         new
                         {
                             id = 1,
-                            assigned_at = new DateTime(2026, 4, 17, 9, 54, 21, 144, DateTimeKind.Utc).AddTicks(3220),
+                            assigned_at = new DateTime(2026, 4, 27, 4, 5, 51, 423, DateTimeKind.Utc).AddTicks(8200),
                             created_by = "",
                             departure_id = 1,
                             from_date = new DateTime(2026, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),

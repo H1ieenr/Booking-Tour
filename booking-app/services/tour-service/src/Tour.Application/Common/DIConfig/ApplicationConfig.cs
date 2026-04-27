@@ -3,12 +3,13 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Common;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
 
 namespace Application.Common
 {
-    public static class DependencyInjection
+    public static class ApplicationConfig
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(cfg =>
@@ -19,6 +20,7 @@ namespace Application.Common
                 cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
             });
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.Configure<ImageSettings>(configuration.GetSection("SettingConfig:Image"));
             return services;
         }
     }

@@ -12,6 +12,8 @@ namespace Infrastructure.Persistence
         public DbSet<Image> Images { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Departure> Departures { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<VehicleAssignment> VehicleAssignments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

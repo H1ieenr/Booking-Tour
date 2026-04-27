@@ -1,4 +1,4 @@
-using Infrastructure.Persistence;
+using Infrastructure;
 using Shared.Exceptions;
 using Application.Common;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddTourInfrastructure(builder.Configuration);
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddSharedInfrastructure(builder.Configuration);
 
 var app = builder.Build();

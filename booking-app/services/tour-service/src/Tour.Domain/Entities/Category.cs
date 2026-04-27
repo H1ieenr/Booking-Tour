@@ -7,6 +7,7 @@ namespace Domain.Entities
         public int id { get; set; }
         public string name { get; set; } = string.Empty;
         public string? image { get; set; }
+        public string? image_public_id { get; set; }
         public int? sequence { get; set; }
         public bool active { get; set; }
         public ICollection<TravelTour> travel_tours { get; set; } = new List<TravelTour>();
