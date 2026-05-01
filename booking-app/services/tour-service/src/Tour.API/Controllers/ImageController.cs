@@ -15,10 +15,18 @@ namespace Tour.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("upload")]
-        public async Task<IActionResult> Upload([FromForm] UploadImagesRequestDTO model)
+        [HttpPost("updates")]
+        public async Task<IActionResult> Uploads([FromForm] UpdateImagesRequestDTO model)
         {
-            var command = new UploadImagesCommand(model);
+            var command = new UpdateImagesCommand(model);
+            var result = await _mediator.Send(command, HttpContext.RequestAborted);
+            return ProcessResult(result);
+        }
+
+        [HttpPost("set-main")]
+        public async Task<IActionResult> SetMain([FromBody] SetMainImageRequestDTO model)
+        {
+            var command = new SetMainImageCommand(model);
             var result = await _mediator.Send(command, HttpContext.RequestAborted);
             return ProcessResult(result);
         }

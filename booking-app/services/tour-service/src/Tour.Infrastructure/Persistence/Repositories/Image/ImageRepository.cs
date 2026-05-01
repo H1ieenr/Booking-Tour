@@ -9,9 +9,9 @@ namespace Infrastructure.Persistence
     {
         public ImageRepository(TourDbContext context) : base(context) { }
 
-        // public async Task<Image> GetImageWithDetailsAsync(int id)
-        // {
-        //     return await _context.Images.FirstOrDefaultAsync(t => t.id == id);
-        // }
+        public async Task<List<Image>> GetByIdsAsync(List<int> ids)
+        {
+            return await _context.Images.Where(t => ids.Contains(t.id)).ToListAsync();
+        }
     }
 }

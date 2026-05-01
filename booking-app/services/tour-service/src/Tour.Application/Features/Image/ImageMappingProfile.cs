@@ -19,6 +19,10 @@ namespace Application.Features
             .ForMember(dest => dest.url, opt => opt.MapFrom(src => src.Url.ToString()))
             .ForMember(dest => dest.public_id, opt => opt.MapFrom(src => src.PublicId))
             .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<SetMainImageRequestDTO, Image>()
+            .ForMember(dest => dest.is_primary, opt => opt.MapFrom(src => src.is_primary))
+            .ForMember(dest => dest.updated_date, opt => opt.MapFrom(src => DatetimeExtension.ConvertDatetimeVN()));
             // 2. Map từ Entity sang DTO   
         }
 

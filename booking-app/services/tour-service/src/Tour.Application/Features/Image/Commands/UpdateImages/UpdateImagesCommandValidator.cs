@@ -4,23 +4,23 @@ using Microsoft.Extensions.Options;
 
 namespace Application.Features
 {
-    public class UploadImagesCommandValidator : AbstractValidator<UploadImagesCommand>
+    public class UpdateImagesCommandValidator : AbstractValidator<UpdateImagesCommand>
     {
-        public UploadImagesCommandValidator(IOptions<ImageSettings> imageOptions)
+        public UpdateImagesCommandValidator(IOptions<ImageSettings> imageOptions)
         {
             var settings = imageOptions.Value;
 
-            RuleFor(v => v.model.travel_tour_id)
+            RuleFor(v => v.model.uploads.travel_tour_id)
                 .GreaterThan(0).WithMessage("ID tour du lịch phải lớn hơn 0.")
                 .NotEmpty().WithMessage("ID tour du lịch là bắt buộc.");
 
-            RuleFor(v => v.model.code_tour)
+            RuleFor(v => v.model.uploads.code_tour)
             .NotEmpty().WithMessage("Mã tour là bắt buộc.");
 
-            RuleFor(x => x.model.files)
+            RuleFor(x => x.model.uploads.files)
             .NotNull().WithMessage("Danh sách ảnh không được rỗng");
 
-            RuleForEach(x => x.model.files).Must(file =>
+            RuleForEach(x => x.model.uploads.files).Must(file =>
             {
                 if (file == null) return false;
 
@@ -28,7 +28,7 @@ namespace Application.Features
                 return settings.AllowedExtensions.Contains(extension);
             }).WithMessage("Định dạng ảnh không hợp lệ");
 
-            RuleForEach(x => x.model.files).Must(file =>
+            RuleForEach(x => x.model.uploads.files).Must(file =>
             {
                 if (file == null) return false;
 
