@@ -17,6 +17,7 @@ namespace Application.Features
             .ForMember(dest => dest.updated_by, opt => opt.MapFrom(src => src.user_id));
             CreateMap<DeleteVehicleRequestDTO, Vehicle>()
             .ForMember(dest => dest.updated_date, opt => opt.MapFrom(src => DatetimeExtension.ConvertDatetimeVN()))
+            .ForMember(dest => dest.updated_by, opt => opt.MapFrom(src => src.user_id))
             .ForMember(dest => dest.is_deleted, opt => opt.MapFrom(src => true));
             // 2. Map từ Entity sang DTO 
         }

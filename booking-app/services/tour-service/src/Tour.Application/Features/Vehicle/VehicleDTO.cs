@@ -35,7 +35,7 @@ namespace Application.Features
     public class GetVehiclesRequestDTO : PaginationParams
     {
         public string? search_text { get; set; } = "";
-        public List<string>? list_status { get; set; }
+        public List<VehicleStatus>? list_status { get; set; }
     };
     #endregion
     #region CreateVehicle
