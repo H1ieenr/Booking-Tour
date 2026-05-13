@@ -3,7 +3,7 @@ using Shared.Common;
 
 namespace Application.Features
 {
-    public record CategoryItemDTO
+    public class CategoryItemDTO
     {
         public int id { get; set; }
         public string name { get; set; } = "";
@@ -13,7 +13,7 @@ namespace Application.Features
         public DateTime? created_date { get; set; }
     }
     #region GetCategoriesLookup
-    public record GetCategoriesLookupDTO
+    public class GetCategoriesLookupDTO
     {
         public int id { get; set; }
         public string name { get; set; } = "";
@@ -35,31 +35,31 @@ namespace Application.Features
     };
     #endregion
     #region CreateCategory
-    public record CreateCategoryRequestDTO
+    public class CreateCategoryRequestDTO : BaseRequestDTO
     {
         public string name { get; set; } = "";
         public IFormFile? image { get; set; }
         public int? sequence { get; set; }
-    };
+    }
     #endregion
     #region UpdateCategory
-    public record UpdateCategoryRequestDTO : CreateCategoryRequestDTO
+    public class UpdateCategoryRequestDTO : CreateCategoryRequestDTO
     {
         public int id { get; set; }
     }
     #endregion
     #region DeleteCategory
-    public record DeleteCategoryRequestDTO
+    public class DeleteCategoryRequestDTO : BaseRequestDTO
     {
         public int id { get; set; }
     }
     #endregion
     #region GetCategoryById
-    public record GetCategoryByIdRequestDTO
+    public class GetCategoryByIdRequestDTO
     {
         public int id { get; set; }
     }
-    public record GetCategoryByIdDTO : CategoryItemDTO
+    public class GetCategoryByIdDTO : CategoryItemDTO
     {
 
     }

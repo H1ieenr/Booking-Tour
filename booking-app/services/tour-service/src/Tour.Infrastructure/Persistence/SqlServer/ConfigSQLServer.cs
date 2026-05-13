@@ -27,7 +27,10 @@ namespace Infrastructure.Persistence
             services.AddScoped<ITravelTourRepository, TravelTourRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
-
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IVehicleAssignmentRepository, VehicleAssignmentRepository>();
+            services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<IDepartureRepository, DepartureRepository>();
             return services;
         }
     }

@@ -3,7 +3,7 @@ using Application.Features;
 using Shared.Common;
 using MediatR;
 
-namespace Tour.API.Controllers
+namespace API.Controllers
 {
     [Route("api/v1/web/image")]
     public class ImageController : ApiControllerBase

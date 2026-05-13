@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 //using MediaR;
@@ -9,26 +10,26 @@ namespace Shared.Common
     {
         //private ISender? _sender;
         //protected ISender Sender => _sender ??= HttpContext.RequestServices.GetRequiredService<ISender>();
-
-        protected int user_id
+        
+        protected string user_id
         {
             get
             {
-                var identifier = User.FindFirstValue(ClaimTypes.NameIdentifier) 
-                                 ?? User.FindFirstValue("id")
-                                 ?? User.FindFirstValue(ClaimTypes.Sid);
-
-                if (int.TryParse(identifier, out var id))
-                {
-                    return id;
-                }
-
-                return 0;
+                return User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    ?? User.FindFirstValue("id")
+                    ?? User.FindFirstValue(ClaimTypes.Sid)
+                    ?? string.Empty;
             }
         }
 
         protected string? email => User.FindFirst(ClaimTypes.Email)?.Value;
         protected string? user_name => User.Identity?.Name;
+
+        protected void BindRequestContext<T>(T model) where T : BaseRequestDTO
+        {
+            model.user_id = user_id;
+        }
+
         protected IActionResult ProcessResult<T>(OperationResult<T> result)
         {
             if (result.IsSuccess) return Ok(result);

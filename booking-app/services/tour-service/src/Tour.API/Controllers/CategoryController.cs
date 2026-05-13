@@ -1,15 +1,15 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Application.Features;
 using Shared.Common;
 using MediatR;
 
-namespace Tour.API.Controllers
+namespace API.Controllers
 {
     [Route("api/v1/web/category")]
     public class CategoryController : ApiControllerBase
     {
         private readonly IMediator _mediator;
-
         public CategoryController(IMediator mediator)
         {
             _mediator = mediator;
@@ -41,6 +41,7 @@ namespace Tour.API.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromForm] CreateCategoryRequestDTO model)
         {
+            BindRequestContext(model);
             var command = new CreateCategoryCommand(model);
             var result = await _mediator.Send(command, HttpContext.RequestAborted);
             return ProcessResult(result);
@@ -48,13 +49,15 @@ namespace Tour.API.Controllers
         [HttpPost("update")]
         public async Task<IActionResult> Update([FromForm] UpdateCategoryRequestDTO model)
         {
+            BindRequestContext(model);
             var command = new UpdateCategoryCommand(model);
             var result = await _mediator.Send(command, HttpContext.RequestAborted);
             return ProcessResult(result);
         }
         [HttpPost("delete")]
-        public async Task<IActionResult> Delete([FromQuery] DeleteCategoryRequestDTO model)
+        public async Task<IActionResult> Delete([FromBody] DeleteCategoryRequestDTO model)
         {
+            BindRequestContext(model);
             var command = new DeleteCategoryCommand(model);
             var result = await _mediator.Send(command, HttpContext.RequestAborted);
             return ProcessResult(result);

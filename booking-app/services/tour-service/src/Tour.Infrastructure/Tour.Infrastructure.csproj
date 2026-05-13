@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>Infrastructure</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Tour.Domain\Tour.Domain.csproj" />
     <ProjectReference Include="..\Tour.Application\Tour.Application.csproj" />
-    <ProjectReference Include="..\..\..\..\shared_kernel_lib\src\Shared.Persistence\Shared.Persistence.csproj" />
+    <ProjectReference
+      Include="..\..\..\..\shared_kernel_lib\src\Shared.Persistence\Shared.Persistence.csproj" />
     <ProjectReference Include="..\..\..\..\shared_kernel_lib\src\Shared.Common\Shared.Common.csproj" />
     <ProjectReference
       Include="..\..\..\..\shared_infrastructure\src\Shared.ServiceExtentions\Shared.ServiceExtentions.csproj" />
